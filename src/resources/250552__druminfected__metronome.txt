@@ -1,0 +1,5 @@
+source: https://freesound.org/people/Druminfected/sounds/250552/
+https://freesound.org/people/Druminfected/
+This work is licensed under the Creative Commons 0 License.
+
+Encoded using opusenc@96kbps (https://opus-codec.org/release/dev/2018/09/18/opus-tools-0_2.html)
