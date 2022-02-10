@@ -5,7 +5,7 @@ export default () => {
     
     // eslint-disable-next-line no-restricted-globals
     self.onmessage = (e) => {
-        if (e.data=="start") {
+        if (e.data === "start") {
             timerID=setInterval(function(){postMessage("tick");},interval)
         }
         else if (e.data.interval) {
@@ -15,7 +15,7 @@ export default () => {
                 timerID=setInterval(function(){postMessage("tick");},interval)
             }
         }
-        else if (e.data=="stop") {
+        else if (e.data === "stop") {
             clearInterval(timerID);
             timerID=null;
         }

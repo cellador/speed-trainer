@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Menu from './pages/Menu';
+import Metronome from './pages/Metronome';
 import './App.css';
-import Metronome from './Metronome';
+
 
 class App extends Component {
   constructor(props) {
@@ -20,38 +23,15 @@ class App extends Component {
     }
     else {
       return(
-        <Metronome />
+        <div className="App">
+          <Routes>
+            <Route exact path='/' element={<Menu />} />
+            <Route path='/metronome' element={<Metronome />} />
+          </Routes>
+        </div>
       );
     }
   }
 }
-
-//   constructor(props) {
-//     super(props);
-
-//     this.state = {
-//       playing: false
-//     };
-
-//     this.click = new Audio(click);
-//   }
-
-//   startStop = () => {    
-//     const newAudio = this.click.cloneNode()
-//     newAudio.play()
-//   }
-
-//   render() {
-//     const { playing } = this.state;
-
-//     return (
-//       <div className="App">
-//         <button onClick={this.startStop}>
-//           Play
-//         </button>
-//       </div>
-//     );
-//   }
-// }
 
 export default App;
