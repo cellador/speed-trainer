@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/static/css/main.0a9dbc9e.css",
+    "main.js": "/static/js/main.8366f23c.js",
+    "static/media/250552__druminfected__metronome.mp3": "/static/media/250552__druminfected__metronome.fea770f678aee81b6a9d.mp3",
+    "index.html": "/index.html",
+    "main.0a9dbc9e.css.map": "/static/css/main.0a9dbc9e.css.map",
+    "main.8366f23c.js.map": "/static/js/main.8366f23c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0a9dbc9e.css",
+    "static/js/main.8366f23c.js"
+  ]
+}
