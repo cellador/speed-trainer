@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/speed-trainer/static/css/main.0a9dbc9e.css",
-    "main.js": "/speed-trainer/static/js/main.9b1321c0.js",
+    "main.css": "/speed-trainer/static/css/main.cf76a474.css",
+    "main.js": "/speed-trainer/static/js/main.d2b361e0.js",
     "static/media/250552__druminfected__metronome.mp3": "/speed-trainer/static/media/250552__druminfected__metronome.fea770f678aee81b6a9d.mp3",
     "index.html": "/speed-trainer/index.html",
-    "main.0a9dbc9e.css.map": "/speed-trainer/static/css/main.0a9dbc9e.css.map",
-    "main.9b1321c0.js.map": "/speed-trainer/static/js/main.9b1321c0.js.map"
+    "main.cf76a474.css.map": "/speed-trainer/static/css/main.cf76a474.css.map",
+    "main.d2b361e0.js.map": "/speed-trainer/static/js/main.d2b361e0.js.map"
   },
   "entrypoints": [
-    "static/css/main.0a9dbc9e.css",
-    "static/js/main.9b1321c0.js"
+    "static/css/main.cf76a474.css",
+    "static/js/main.d2b361e0.js"
   ]
 }
