@@ -30,8 +30,8 @@ export function setTempo( t ) {
     tempo = t;
 }
 
-export function getTempo() {
-    return ( tempo );
+export function setResolution( r ) {
+    noteResolution = r;
 }
 
 export function init( t, resolution ) {

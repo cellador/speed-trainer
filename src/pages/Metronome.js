@@ -1,19 +1,19 @@
 import { Component } from "react/cjs/react.production.min";
 import * as MetronomeComponent from "../components/metronome"
-import Slider from 'rc-slider';
-import 'rc-slider/assets/index.css';
-
-const { Handle } = Slider;
+import BPMSlider from '../components/BPMSlider';
 
 class Metronome extends Component {
     constructor(props) {
         super(props);
 
         this.tempo = 60;
-        this.noteResolution = 2;
         this.playing = false;
 
-        MetronomeComponent.init( this.tempo, this.noteResolution );
+        this.state = {
+            noteResolution: 2
+        };
+
+        MetronomeComponent.init( this.tempo, this.state.noteResolution );
     }
 
     togglePlay() {
@@ -26,29 +26,38 @@ class Metronome extends Component {
         MetronomeComponent.togglePlay();
     }
 
+    setTempo( value ) {
+        this.tempo = value;
+
+        MetronomeComponent.setTempo( this.tempo );
+
+        var bpm = document.getElementById("bpm");
+        if (bpm != null) {
+            bpm.value = this.tempo;
+            bpm.innerHTML = this.tempo;
+        }
+    }
+
+    setResolution( event ) {
+        const r = parseInt(event.target.value);
+        this.setState({
+            noteResolution: r
+        });
+        MetronomeComponent.setResolution( r );
+    }
+
     render() {
-        var style = {width:400,margin:50};
-        var handle = props => {
-            const { value, dragging, index, ...restProps } = props;
-
-            this.tempo = value;
-
-            MetronomeComponent.setTempo( this.tempo );
-
-            var bpm = document.getElementById("bpm");
-            if (bpm != null) {
-                bpm.value = this.tempo;
-                bpm.innerHTML = this.tempo;
-            }
-
-            return(<Handle value={props.value} {...restProps} />)
-        };
+        var style = {width: 300, margin:50};
 
         return (
             <div>
-                <h1 id="bpm">{this.tempo}</h1>
                 <div style = {style}>
-                    <Slider defaultValue={this.tempo} min={1} max={240} handle={handle}/>
+                    <BPMSlider from={20} to={180} default={this.tempo} callback={this.setTempo.bind(this)} />
+                </div>
+                <div>
+                    <input type="radio" onChange={this.setResolution.bind(this)} checked={this.state.noteResolution === 2} value="2" name="fourth" /> 4th
+                    <input type="radio" onChange={this.setResolution.bind(this)} checked={this.state.noteResolution === 1} value="1" name="eight" /> 8th
+                    <input type="radio" onChange={this.setResolution.bind(this)} checked={this.state.noteResolution === 0} value="0" name="sixteenth" /> 16th
                 </div>
                 <button id="playpause" onClick={this.togglePlay.bind(this)}>
                     Play
