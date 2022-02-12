@@ -1,6 +1,8 @@
 import { Component } from "react/cjs/react.production.min";
+
 import * as MetronomeComponent from "../components/metronome"
 import BPMSlider from '../components/BPMSlider';
+import { withRouter, neutralizeBack, restoreBack } from '../components/HistoryManager';
 
 class Metronome extends Component {
     constructor(props) {
@@ -14,6 +16,14 @@ class Metronome extends Component {
         };
 
         MetronomeComponent.init( this.tempo, this.state.noteResolution );
+    }
+
+    componentDidMount() {
+      neutralizeBack(() => {this.props.router.navigate("/")});
+    }
+
+    componentWillUnmount() {
+      restoreBack();
     }
 
     togglePlay() {
@@ -51,6 +61,7 @@ class Metronome extends Component {
 
         return (
             <div>
+                <button onClick={ () => this.props.router.navigate("/") }>Back</button>
                 <div style = {style}>
                     <BPMSlider from={20} to={180} default={this.tempo} callback={this.setTempo.bind(this)} />
                 </div>
@@ -67,4 +78,4 @@ class Metronome extends Component {
     }
 }
 
-export default Metronome;
+export default withRouter(Metronome);
