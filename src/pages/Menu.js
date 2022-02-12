@@ -5,8 +5,8 @@ class Menu extends Component {
   render() {
     return (
       <div>
-        <Link to="/metronome">Metronome</Link>
-        <Link to="/metronome">Metronome</Link>
+        <Link to="/metronome">Metronome</Link><br />
+        <Link to="/trainer">Trainer</Link>
       </div>
     );
   }

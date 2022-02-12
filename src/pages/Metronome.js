@@ -4,15 +4,16 @@ import * as MetronomeComponent from "../components/Metronome"
 import BPMSlider from '../components/BPMSlider';
 import { withRouter, neutralizeBack, restoreBack } from '../components/HistoryManager';
 
+import './Metronome.css';
+
 class Metronome extends Component {
   constructor(props) {
     super(props);
 
-    this.tempo = 60;
-    this.playing = false;
-
     this.state = {
-        noteResolution: 2
+      playing: false,
+      tempo: 60,
+      noteResolution: 2
     };
 
     MetronomeComponent.init( this.tempo, this.state.noteResolution );
@@ -24,33 +25,46 @@ class Metronome extends Component {
 
   componentWillUnmount() {
     restoreBack();
+
+    MetronomeComponent.stop();
   }
 
   togglePlay() {
-    this.playing = !this.playing
+    var playing = !this.state.playing
 
-    var btn = document.getElementById("playpause");
-    btn.value = this.playing ? "Pause" : "Play";
-    btn.innerHTML = btn.value;
+    this.setState({
+      playing: playing,
+      tempo: this.state.tempo,
+      noteResolution: this.state.noteResolution
+    })
 
-    MetronomeComponent.togglePlay();
+    if (playing) {
+      MetronomeComponent.start();
+    } else {
+      MetronomeComponent.stop();
+    }
   }
 
   setTempo( value ) {
-    this.tempo = value;
-
-    MetronomeComponent.setTempo( this.tempo );
+    this.setState({
+      playing: this.state.playing,
+      tempo: value,
+      noteResolution: this.state.noteResolution
+    });
+    MetronomeComponent.setTempo( value );
 
     var bpm = document.getElementById("bpm");
     if (bpm != null) {
-      bpm.value = this.tempo;
-      bpm.innerHTML = this.tempo;
+      bpm.value = value;
+      bpm.innerHTML = value;
     }
   }
 
   setResolution( event ) {
     const r = parseInt(event.target.value);
     this.setState({
+      playing: this.state.playing,
+      tempo: this.state.tempo,
       noteResolution: r
     });
     MetronomeComponent.setResolution( r );
@@ -62,16 +76,34 @@ class Metronome extends Component {
     return (
       <div>
         <button onClick={ () => this.props.router.navigate("/") }>Back</button>
-        <div style = {style}>
-            <BPMSlider from={20} to={180} default={this.tempo} callback={this.setTempo.bind(this)} />
-        </div>
-        <div>
-            <input type="radio" onChange={this.setResolution.bind(this)} checked={this.state.noteResolution === 2} value="2" name="fourth" /> 4th
-            <input type="radio" onChange={this.setResolution.bind(this)} checked={this.state.noteResolution === 1} value="1" name="eight" /> 8th
-            <input type="radio" onChange={this.setResolution.bind(this)} checked={this.state.noteResolution === 0} value="0" name="sixteenth" /> 16th
+        <div className="bpmslider-wrapper" style = {style}>
+          <BPMSlider from={20} to={180} default={this.state.tempo} callback={this.setTempo.bind(this)} />
+          <div className="note-resolution-container">
+              <input 
+                id="fourth"
+                type="radio" 
+                onChange={this.setResolution.bind(this)} 
+                checked={this.state.noteResolution === 2} 
+                value="2" />
+                <label htmlFor="fourth">4th</label>
+              <input 
+                id="eight"
+                type="radio" 
+                onChange={this.setResolution.bind(this)} 
+                checked={this.state.noteResolution === 1} 
+                value="1" />
+                <label htmlFor="eight">8th</label>
+              <input 
+                id="sixteenth"
+                type="radio" 
+                onChange={this.setResolution.bind(this)} 
+                checked={this.state.noteResolution === 0} 
+                value="0" />
+                <label htmlFor="sixteenth">16th</label>
+          </div>
         </div>
         <button id="playpause" onClick={this.togglePlay.bind(this)}>
-            Play
+            {this.state.playing ? "Stop" : "Start"}
         </button>
       </div>
     );

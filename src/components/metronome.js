@@ -1,3 +1,26 @@
+// Adapted from https://github.com/cwilso/metronome
+// License:
+// The MIT License (MIT)
+
+// Copyright (c) 2014 Chris Wilson
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 
 import clickFile from '../res/250552__druminfected__metronome.mp3';
 import WorkerBuilder from './WorkerBuilder';
@@ -5,7 +28,7 @@ import Metronomeworker from './MetronomeWorker';
 
 // Configuration globals
 var lookahead = 25.0;        // How frequently to call scheduling function 
-                             //(in milliseconds)
+                             // (in milliseconds)
 var scheduleAheadTime = 0.1; // How far ahead to schedule audio (sec)
                              // This is calculated from lookahead, and overlaps 
                              // with next interval (in case the timer is late)
@@ -15,7 +38,6 @@ var unlocked = false;
 var notesInQueue = [];       // the notes that have been put into the web audio,
                              // and may or may not have played yet. {note, time}
 var nextNoteTime = 0.0;      // when the next note is due.
-var isPlaying = false;       // Are we currently playing?
 var current16thNote = 0;     // What note is currently last scheduled?
 
 // Worker globals
@@ -59,7 +81,7 @@ export function init( t, resolution ) {
   timerWorker.postMessage({"interval":lookahead});
 }
 
-export function togglePlay() {
+export function start() {
   if (!unlocked) {
     // play silent buffer to unlock the audio
     var buffer = audioContext.createBuffer(1, 1, 22050);
@@ -69,17 +91,15 @@ export function togglePlay() {
     unlocked = true;
   }
 
-  isPlaying = !isPlaying;
+  current16thNote = 0;
+  nextNoteTime = audioContext.currentTime;
+  timerWorker.postMessage("start");
+  return "stop";
+}
 
-  if (isPlaying) { // start playing
-    current16thNote = 0;
-    nextNoteTime = audioContext.currentTime;
-    timerWorker.postMessage("start");
-    return "stop";
-  } else {
-    timerWorker.postMessage("stop");
-    return "play";
-  }
+export function stop() {
+  timerWorker.postMessage("stop");
+  return "play";
 }
 
 function nextNote() {

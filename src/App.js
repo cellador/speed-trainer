@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Menu from './pages/Menu';
 import Metronome from './pages/Metronome';
+import Trainer from './pages/Trainer';
 import './App.css';
 
 
@@ -27,6 +28,7 @@ class App extends Component {
           <Routes>
             <Route exact path='/' element={<Menu />} />
             <Route path='/metronome' element={<Metronome />} />
+            <Route path='/trainer' element={<Trainer />} />
           </Routes>
         </div>
       );

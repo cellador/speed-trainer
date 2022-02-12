@@ -1,0 +1,15 @@
+.bpmslider-wrapper label {
+    display: inline-block;
+}
+
+.bpmslider-wrapper input[type="radio"] {
+    display:none;   
+}
+
+.bpmslider-wrapper input[type="radio"]:checked + label {
+    font-weight: bold;
+}
+.bpmslider-wrapper .note-resolution-container label {
+    font-size: 25px;
+    margin: 15px 15px 0px 15px;
+}

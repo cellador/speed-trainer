@@ -70,6 +70,18 @@ body {
   align-items: center;
 }
 
+.swiper-slide #inputBPM {
+  border: none;
+  width: 60px;
+  font-size: 52px;
+  font-weight: bold;
+  background: transparent;
+}
+
+.swiper-slide #inputBPM:focus {
+  outline: none;
+}
+
 .swiper-slide-active {
     font-size:52px;
     font-weight: bold;

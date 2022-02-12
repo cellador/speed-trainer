@@ -1,3 +1,5 @@
+//Credit: Haikel Ouaghrem
+//Source: https://javascript.plainenglish.io/web-worker-in-react-9b2efafe309c
 export default class WorkerBuilder extends Worker {
   constructor(worker) {
     const code = worker.toString();
